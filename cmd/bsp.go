@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	depth int
+	bspDepth int
 )
 
 // bspCmd represents the bsp command
@@ -27,13 +27,17 @@ var bspCmd = &cobra.Command{
 			rand.Seed(time.Now().UnixNano())
 			seed = rand.Int63n(1000000)
 		}
-		m := bsp.Gen(mapWidth, mapHeight, depth, seed)
-		util.Print(m)
+		m := bsp.Gen(mapWidth, mapHeight, bspDepth, seed)
+		if output == "" {
+			util.Print(m)
+		} else {
+			util.Draw(m, output)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(bspCmd)
 
-	bspCmd.Flags().IntVar(&depth, "depth", 3, "depth")
+	bspCmd.Flags().IntVar(&bspDepth, "depth", 3, "depth")
 }

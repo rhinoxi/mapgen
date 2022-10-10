@@ -14,6 +14,7 @@ var (
 	mapHeight int
 	mapWidth  int
 	seed      int64
+	output    string
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -43,4 +44,5 @@ func init() {
 	rootCmd.PersistentFlags().IntVarP(&mapWidth, "width", "W", 40, "")
 	rootCmd.PersistentFlags().IntVarP(&mapHeight, "height", "H", 40, "")
 	rootCmd.PersistentFlags().Int64Var(&seed, "seed", 0, "")
+	rootCmd.PersistentFlags().StringVarP(&output, "output", "o", "", "output path")
 }

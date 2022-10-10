@@ -3,8 +3,8 @@ package util
 import "fmt"
 
 func Print(m [][]bool) {
-	for i := len(m) - 1; i >= 0; i-- {
-		for _, item := range m[i] {
+	for _, row := range m {
+		for _, item := range row {
 			if item {
 				fmt.Print(".")
 			} else {
