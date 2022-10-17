@@ -5,10 +5,11 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 
-	ca "github.com/rhinoxi/mapgen/cellularAutomata"
+	ca "github.com/rhinoxi/mapgen/cellularautomata"
 	"github.com/rhinoxi/mapgen/util"
 	"github.com/spf13/cobra"
 )
@@ -33,6 +34,10 @@ var caCmd = &cobra.Command{
 			util.Print(m)
 		} else {
 			util.Draw(m, output)
+		}
+		fmt.Println("\nIsland area:")
+		for i, count := range util.CountIsland(m) {
+			fmt.Printf("    Island %d: %d\n", i, count)
 		}
 	},
 }
