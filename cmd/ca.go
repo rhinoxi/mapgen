@@ -17,6 +17,7 @@ import (
 var (
 	caIters      int
 	noiseDensity int
+	minArea      int
 )
 
 // caCmd represents the ca command
@@ -30,14 +31,18 @@ var caCmd = &cobra.Command{
 			seed = rand.Int63n(1000000)
 		}
 		m := ca.Gen(mapWidth, mapHeight, noiseDensity, caIters, seed)
+		islands := util.DetectIslands(m)
+		islands = util.RemoveSmallIslands(m, islands, minArea)
+
 		if output == "" {
 			util.Print(m)
 		} else {
 			util.Draw(m, output)
 		}
+
 		fmt.Println("\nIsland area:")
-		for i, count := range util.CountIsland(m) {
-			fmt.Printf("    Island %d: %d\n", i, count)
+		for i, island := range islands {
+			fmt.Printf("    Island %d: %d\n", i, island.Area())
 		}
 	},
 }
@@ -47,4 +52,5 @@ func init() {
 
 	caCmd.Flags().IntVar(&caIters, "iter", 3, "iterations")
 	caCmd.Flags().IntVar(&noiseDensity, "density", 60, "noise density")
+	caCmd.Flags().IntVar(&minArea, "min-area", 1, "exclude island which smaller than min-area")
 }
